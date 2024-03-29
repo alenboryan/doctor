@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Voting</title>
+</head>
+<body>
+    <h1>{{ doctor.firstname }} {{ doctor.lastname }}</h1> <!-- Assuming you pass 'doctor' to the template -->
+    <h2>{{ doctor.profession }}</h2> <!-- Assuming you want to display doctor's profession -->
+
+    {% if voted %}
+        <p style="color:red;">You have already voted</p>
+        {% for choice in choices %}
+            <ul>
+                <li>{{ choice.text }} - {{ choice.votes }}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <form action="/api/vote/{{ choice.doctor.id }}/" method="post"> <!-- Assuming you pass 'choice' and 'doctor' to the template -->
+            {% csrf_token %}
+            <fieldset>
+                {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+                {% for choice in choices %}
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}">{{ choice.text }} - {{ choice.votes }}</label><br>
+                {% endfor %}
+            </fieldset>
+            {% if message %}
+                <p style="color: blue;">{{ message }}</p>
+            {% endif %}
+            <input style="background-color: blue" type="submit" value="Vote">
+        </form>
+    {% endif %}
+
+    <a href="/api/logout">Log out</a>
+</body>
+</html>
+

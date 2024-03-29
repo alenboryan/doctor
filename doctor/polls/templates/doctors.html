@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors</title>
+</head>
+<body>
+    <h1>Doctors</h1>
+    <ul>
+        {% for doctor in doctors %}
+            <li><a href="{% url 'doctor_detail' doctor.id %}">{{ doctor.firstname }} {{ doctor.lastname }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+

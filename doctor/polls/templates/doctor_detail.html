@@ -1,0 +1,30 @@
+<h1>{{ name }}</h1>
+
+<h2> {{question.question}}</h2>
+
+
+{% if voted %}
+    <p style="color:red;">You are already voted</p>
+    {% for choice in choices %}
+        <ul>
+	    <li> {{ choice.text}} - {{ choice.votes}}</li>
+	</ul>
+    {% endfor%}
+{% else %}
+<form action="/api/questions/{{ question.id}}/" method="post">
+    {% csrf_token %}
+    <fieldset>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in choices %}
+	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+	<label for="choice{{ forloop.counter }}">{{ choice.text }} -  {{ choice.votes}}</label><br>
+        {% endfor %}
+    </fieldset>
+    {% if message %}
+    	<p style="color: blue;">{{ message }} </p>
+    {% endif %}
+<input style="background-color: blue" type="submit" value="Vote">
+</form>
+{% endif %}
+
+<a href="/api/logout">Log out</a>

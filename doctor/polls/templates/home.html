@@ -1,0 +1,16 @@
+<h1> Welcome to Home Page!</h1>
+{% if error %}
+   <h2 style="color:red;"> {{error}}</h2>
+    <a href="/api/login">Login</a>
+{% else %}
+    <h2 style="color:red">{{ name }}</h2>
+
+    {% for d in doctors %}
+        <ul>
+	    <li>
+    		<a href="/api/questions/{{q.id}}" > &#x2a; {{d.firstname}} - {{ d.lastname}} </a>
+	    </li>
+	</ul>
+    {% endfor%}
+    <a href="/api/logout">Log out</a>
+{% endif %}
